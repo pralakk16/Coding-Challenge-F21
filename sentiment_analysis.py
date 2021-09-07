@@ -6,9 +6,10 @@ from nltk.stem import WordNetLemmatizer
 
 from textblob import TextBlob
 
-
+#Reads Input Text
 text = open('input.txt', encoding='utf-8').read()
 
+#Tokenizes, Puts Parts of Speech as Tuple, and Removes Unnecessary/Stop Words
 pos_dict = {'J':wordnet.ADJ, 'V':wordnet.VERB, 'N':wordnet.NOUN, 'R':wordnet.ADV}
 def tokenize_pos_stopwords(text):
     tokens = word_tokenize(text)
@@ -19,6 +20,7 @@ def tokenize_pos_stopwords(text):
             newlist.append(tuple([word, pos_dict.get(tag[0])]))
     return newlist
 
+#Lemmetaizer POS Tuple
 wordnet_lemmatizer = WordNetLemmatizer()
 def lemmatizer(pos_data):
     lemma_rew = " "
@@ -31,12 +33,15 @@ def lemmatizer(pos_data):
             lemma_rew = lemma_rew + " " + lemma
     return lemma_rew
 
+#Gets Subjectivity Score
 def getSubjectivity(lemmatized_text):
     return TextBlob(lemmatized_text).sentiment.subjectivity
 
+#Gets Polarity Score
 def getPolarity(lemmatized_text):
     return TextBlob(lemmatized_text).sentiment.polarity
 
+#Performs Sentiment Analysis
 def sentiment_analysis(score):
     if score < 0:
         return 'Negative Sentiment'
@@ -45,6 +50,7 @@ def sentiment_analysis(score):
     else:
         return 'Positive'
 
+#Main Calculator Function
 def calculate(text):
     pos_data = tokenize_pos_stopwords(text)
     lemmatized_text = lemmatizer(pos_data)
