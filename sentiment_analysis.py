@@ -1,27 +1,60 @@
+from nltk.tokenize import word_tokenize
+from nltk import pos_tag
+from nltk.corpus import stopwords
+from nltk.corpus import wordnet
+from nltk.stem import WordNetLemmatizer
 
-import nltk
-from nltk.corpus import movie_reviews
-import random
-
-documents = [(list(movie_reviews.words(fileid)), category)
-              for category in movie_reviews.categories()
-              for fileid in movie_reviews.fileids(category)]
+from textblob import TextBlob
 
 
-random.shuffle(documents)
+text = open('input.txt', encoding='utf-8').read()
 
-all_words = nltk.FreqDist(w.lower() for w in movie_reviews.words())
-word_features = list(all_words)[:2000]
+pos_dict = {'J':wordnet.ADJ, 'V':wordnet.VERB, 'N':wordnet.NOUN, 'R':wordnet.ADV}
+def tokenize_pos_stopwords(text):
+    tokens = word_tokenize(text)
+    tags = pos_tag(tokens)
+    newlist = []
+    for word, tag in tags:
+        if word.lower() not in set(stopwords.words('english')):
+            newlist.append(tuple([word, pos_dict.get(tag[0])]))
+    return newlist
 
-def document_features(document):
-    document_words = set(document)
-    features = {}
-    for word in word_features:
-        features['contains({})'.format(word)] = (word in document_words)
-    return features
+wordnet_lemmatizer = WordNetLemmatizer()
+def lemmatizer(pos_data):
+    lemma_rew = " "
+    for word, pos in pos_data:
+        if not pos: 
+            lemma = word
+            lemma_rew = lemma_rew + " " + lemma
+        else:  
+            lemma = wordnet_lemmatizer.lemmatize(word, pos=pos)
+            lemma_rew = lemma_rew + " " + lemma
+    return lemma_rew
 
-featuresets = [(document_features(d), c) for (d,c) in documents]
-train_set, test_set = featuresets[100:], featuresets[:100]
-classifier = nltk.NaiveBayesClassifier.train(train_set)
+def getSubjectivity(lemmatized_text):
+    return TextBlob(lemmatized_text).sentiment.subjectivity
 
-print(classifier.show_most_informative_features(5))
+def getPolarity(lemmatized_text):
+    return TextBlob(lemmatized_text).sentiment.polarity
+
+def sentiment_analysis(score):
+    if score < 0:
+        return 'Negative Sentiment'
+    elif score == 0:
+        return 'Neutral Sentiment'
+    else:
+        return 'Positive'
+
+def calculate(text):
+    pos_data = tokenize_pos_stopwords(text)
+    lemmatized_text = lemmatizer(pos_data)
+    subjectivity = getSubjectivity(lemmatized_text)
+    polarity = getPolarity(lemmatized_text)
+    return subjectivity, polarity
+
+print("Polarity of Text: ", calculate(text)[1])
+print("Subjectivity of Text: ", calculate(text)[0])
+print("Sentiment of Text: ", sentiment_analysis(calculate(text)[1]))
+    
+
+

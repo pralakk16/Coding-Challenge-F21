@@ -1,8 +1,5 @@
 # ACM Research Coding Challenge (Fall 2021)
 
-## [](https://github.com/ACM-Research/Coding-Challenge-F21#no-collaboration-policy)No Collaboration Policy
-
-**You may not collaborate with anyone on this challenge.**  You  _are_  allowed to use Internet documentation. If you  _do_  use existing code (either from Github, Stack Overflow, or other sources),  **please cite your sources in the README**.
 
 ## [](https://github.com/ACM-Research/Coding-Challenge-F21#submission-procedure)Submission Procedure
 
