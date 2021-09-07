@@ -12,10 +12,19 @@
 Regardless if you can or cannot answer the question, provide a short explanation of how you got your solution or how you think it can be solved in your README.md file. However, we highly recommend giving the challenge a try, you just might learn something new!
 
 ## Solution
-
-### Libraries/Packages/API's USED
+ 
+### Libraries/Packages/API's Used
 
 I have used the following libraries for this Coding Challenge:
 
 1. NLTK
 2. TextBlob
+
+### Steps towards Solution
+
+### 1. Formatting Data
+
+Since the Text Input (input.txt) is in an unstrucutred text format, I first formatted the data to provide a readable structure for the computer to process.
+
+#### Steps of Formatting
+    
