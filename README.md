@@ -13,7 +13,7 @@ Regardless if you can or cannot answer the question, provide a short explanation
 
 ## Solution
 
-# Libraries/Packages/API's USED
+### Libraries/Packages/API's USED
 
 I have used the following libraries for this Coding Challenge:
 
