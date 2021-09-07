@@ -27,4 +27,6 @@ I have used the following libraries for this Coding Challenge:
 Since the Text Input (input.txt) is in an unstrucutred text format, I first formatted the data to provide a readable structure for the computer to process.
 
 #### Steps of Formatting
-    
+
+##### 1. Tokenization, Parts of Speech, Stop Words
+
